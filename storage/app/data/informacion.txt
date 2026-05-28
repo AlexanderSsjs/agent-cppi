@@ -1,0 +1,84 @@
+==================================================
+CATÁLOGO DE CURSOS Y PAGOS - INGENIERÍA LÍDER 2026
+==================================================
+
+CURSO: Gestión Integral del Ciclo de Inversión Pública
+Abreviación: Invierte.pe
+Duración: 80 horas académicas
+Temario:
+- Sistema Administrativo en el Sector Público
+- Marco Normativo del Sistema Nacional de Programación Multianual y Gestión de Inversiones
+- Identificación, Formulación y Evaluación
+- Fases del Ciclo de Inversión
+- Formulación de alternativas, evaluación ex post y operación
+- Módulo Práctico: Formulación de Proyectos
+- Evaluación Social (Excel) e Impacto Ambiental
+- Formatos: 6A, 7A, 8A, 8B, 9 y 12B
+- Ficha estándar para proyectos de saneamiento (urbano y rural)
+
+CURSO: Manejo de Sistemas Administrativos del Estado
+Abreviación: Sistemas Administrativos
+Duración: 80 horas académicas
+Temario:
+- Gestión por procesos: Política Nacional de Modernización, elementos y ciclo de mejora
+- Desarrollo, territorio, inversión y gestión pública
+- Sistema Invierte.pe: Marco normativo, fases, programación multianual y formulación
+- Registro de Cierre de Inversiones
+- Sistemas Administrativos: Integración, SIAF y SIGA (introducción)
+
+CURSO: Sistema Nacional de Información de Obras Públicas
+Abreviación: INFOBRAS
+Duración: 80 horas académicas
+Temario:
+- Introducción: Marco normativo, rol de la Contraloría y beneficios
+- Registro de datos de la obra: Ingreso, expediente técnico, ubicación y financiamiento
+- Supervisión y ejecución: Reportes de avance, evidencias y buenas prácticas
+- Cierre y liquidación: Actas, registro final, validación y errores frecuentes
+- Casos prácticos y simulación
+
+CURSO: Sistema Integrado de Administración Financiera del Estado
+Abreviación: SIAF
+Duración: 80 horas académicas
+Temario:
+- Introducción: Estructura, principios, alcances y rol de Unidades Ejecutoras
+- Componentes: Entorno, perfiles, estructura, clasificadores y fuentes de financiamiento
+- Presupuesto público: Fases, programación, registro de PIA, modificaciones y cadena programática
+- Certificación, compromiso y devengado: Registros, gestión de saldos, anulaciones y reportes
+
+CURSO: Sistema Integrado de Gestión Administrativa
+Abreviación: SIGA
+Duración: 80 horas académicas
+Temario:
+- Introducción: Importancia, rol y estructura general
+- Gestión de almacén y patrimonio: Kardex, transferencias, ajustes, altas, bajas y reportes
+- Gestión de requerimientos y abastecimiento: Registro, catálogo, consolidación, priorización y seguimiento
+
+CURSO: Contrataciones del Estado
+Abreviación: GECE
+Duración: 80 horas académicas
+Temario:
+- Marco general: Finalidad, principios, actores y bases
+- Procedimientos de selección: Tipos, fases, presentación de ofertas y buena pro
+- Actuaciones preparatorias: Requerimientos, mercado, valor estimado, PAC y certificación
+
+CURSO: Ofimática Profesional
+Abreviación: Ofimatica
+Duración: 80 horas académicas
+Temario:
+- Procesador de textos: Edición, formato, estilos, tablas, revisión y PDF
+- Presentaciones: Diseños, animaciones, transiciones y trabajo colaborativo
+- Hojas de cálculo y Power BI: Fórmulas, filtros, tablas dinámicas y paneles
+- Gestión digital: Nube, archivos, permisos y entorno Microsoft
+
+--------------------------------------------------
+INFORMACIÓN PARA PAGOS - INGENIERÍA LÍDER
+--------------------------------------------------
+BANCOS (Titular: Ingeniería Líder)
+- BBVA: 0011-0057-0239740503
+- BCP: 49501522111064
+- Interbank: 8983214510911
+
+PAGOS MÓVILES (Titular: Ingeniería Líder)
+- Yape: 959280078
+- Plin: 959280078
+==================================================

@@ -1,65 +1,125 @@
-import React, { useState, useRef, useEffect } from 'react';
-import ReactMarkdown from 'react-markdown';
+import React, { useState, useRef, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
+import rehypeSanitize from "rehype-sanitize";
 
 export default function ChatInterface() {
     const [mensajes, setMensajes] = useState([
-        { rol: 'bot', texto: '¡Hola! Soy el asistente de la CPPI. ¿En qué puedo ayudarte con las inscripciones?' }
+        {
+            rol: "bot",
+            texto: "¡Hola! Soy el asistente virtual de Ingeniería Líder 😊 ¿En qué curso o proceso de inscripción puedo ayudarte?",
+            hora: obtenerHora(),
+        },
     ]);
-    const [input, setInput] = useState('');
+
+    const [input, setInput] = useState("");
     const [cargando, setCargando] = useState(false);
+
     const mensajesEndRef = useRef(null);
 
+    // Scroll automático
     useEffect(() => {
-        mensajesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [mensajes]);
+        mensajesEndRef.current?.scrollIntoView({
+            behavior: "smooth",
+        });
+    }, [mensajes, cargando]);
+
+    function obtenerHora() {
+        return new Date().toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+    }
 
     const enviarMensaje = async (e) => {
         e.preventDefault();
-        if (!input.trim() || cargando) return;
 
-        const textoUsuario = input;
-        setMensajes(prev => [...prev, { rol: 'usuario', texto: textoUsuario }]);
-        setInput('');
+        const textoUsuario = input.trim();
+
+        // Validaciones
+        if (!textoUsuario || textoUsuario.length < 2 || cargando) return;
+
+        // Agregar mensaje usuario
+        const nuevoMensajeUsuario = {
+            rol: "usuario",
+            texto: textoUsuario,
+            hora: obtenerHora(),
+        };
+
+        setMensajes((prev) => [...prev, nuevoMensajeUsuario]);
+
+        setInput("");
         setCargando(true);
 
-        // Búsqueda segura del token CSRF
-        const metaTag = document.querySelector('meta[name="csrf-token"]');
-        const csrfToken = metaTag ? metaTag.getAttribute('content') : '';
+        // Obtener token CSRF
+        const csrfToken =
+            document
+                .querySelector('meta[name="csrf-token"]')
+                ?.getAttribute("content") || "";
 
         try {
-            console.log("Enviando petición a /chat..."); // Log de depuración
+            const respuesta = await fetch("/chat", {
+                method: "POST",
 
-            const respuesta = await fetch('/chat', {
-                method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    "X-CSRF-TOKEN": csrfToken,
                 },
-                body: JSON.stringify({ mensaje: textoUsuario })
+
+                body: JSON.stringify({
+                    mensaje: textoUsuario,
+
+                    // Solo últimos 10 mensajes
+                    historial: mensajes.slice(-10),
+                }),
             });
 
-            // Depuración de respuesta del servidor
             if (!respuesta.ok) {
                 const errorTexto = await respuesta.text();
-                console.error("Error detectado en la respuesta del servidor:", {
+
+                console.error("Error servidor:", {
                     status: respuesta.status,
-                    body: errorTexto
+                    body: errorTexto,
                 });
-                throw new Error(`Error ${respuesta.status}: ${errorTexto}`);
+
+                throw new Error("Error del servidor");
             }
 
             const data = await respuesta.json();
-            console.log("Respuesta recibida exitosamente:", data); // Log de depuración
 
-            if (data.status === 'success') {
-                setMensajes(prev => [...prev, { rol: 'bot', texto: data.respuesta }]);
+            if (data.status === "success") {
+                setMensajes((prev) => [
+                    ...prev,
+
+                    {
+                        rol: "bot",
+                        texto: data.respuesta,
+                        hora: obtenerHora(),
+                    },
+                ]);
             } else {
-                setMensajes(prev => [...prev, { rol: 'bot', texto: 'El servidor respondió con error.' }]);
+                setMensajes((prev) => [
+                    ...prev,
+
+                    {
+                        rol: "bot",
+                        texto: "Ocurrió un problema al procesar tu consulta.",
+                        hora: obtenerHora(),
+                    },
+                ]);
             }
         } catch (error) {
-            console.error("Excepción en enviarMensaje:", error); // Log de depuración
-            setMensajes(prev => [...prev, { rol: 'bot', texto: 'Error técnico: Revisa la consola (F12).' }]);
+            console.error("Error:", error);
+
+            setMensajes((prev) => [
+                ...prev,
+
+                {
+                    rol: "bot",
+                    texto: "⚠️ Ocurrió un problema de conexión. Intenta nuevamente en unos segundos.",
+                    hora: obtenerHora(),
+                },
+            ]);
         } finally {
             setCargando(false);
         }
@@ -67,32 +127,63 @@ export default function ChatInterface() {
 
     return (
         <div className="chat-container">
-            <div className="chat-header">Agente CPPI</div>
-            
+            <div className="chat-header">Ingeniería Líder</div>
+
             <div className="chat-messages">
                 {mensajes.map((msg, index) => (
-                    <div key={index} className={`mensaje ${msg.rol === 'usuario' ? 'mensaje-usuario' : 'mensaje-bot'}`}>
-                    {/* 2. Envuelve el texto en ReactMarkdown */}
-                    <ReactMarkdown>{msg.texto}</ReactMarkdown>
+                    <div
+                        key={index}
+                        className={`mensaje ${
+                            msg.rol === "usuario"
+                                ? "mensaje-usuario"
+                                : "mensaje-bot"
+                        }`}
+                    >
+                        <div className="mensaje-contenido">
+                            <ReactMarkdown rehypePlugins={[rehypeSanitize]}>
+                                {msg.texto}
+                            </ReactMarkdown>
+                        </div>
+
+                        <div className="mensaje-hora">{msg.hora}</div>
                     </div>
                 ))}
+
                 {cargando && (
-                    <div className="mensaje mensaje-bot" style={{ opacity: 0.7 }}>Escribiendo...</div>
+                    <div className="mensaje mensaje-bot">
+                        <div className="typing">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
                 )}
+
                 <div ref={mensajesEndRef} />
             </div>
 
             <form onSubmit={enviarMensaje} className="chat-input-area">
-                <input 
-                    type="text" 
+                <textarea
                     className="chat-input"
-                    placeholder="Escribe tu consulta aquí..." 
+                    placeholder="Escribe tu consulta aquí..."
                     value={input}
-                    onChange={(e) => setInput(e.target.value)}
                     disabled={cargando}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                            e.preventDefault();
+                            enviarMensaje(e);
+                        }
+                    }}
+                    rows={1}
                 />
-                <button type="submit" className="btn-enviar" disabled={cargando || !input.trim()}>
-                    Enviar
+
+                <button
+                    type="submit"
+                    className="btn-enviar"
+                    disabled={cargando || !input.trim()}
+                >
+                    {cargando ? "..." : "Enviar"}
                 </button>
             </form>
         </div>

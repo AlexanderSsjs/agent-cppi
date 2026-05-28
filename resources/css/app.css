@@ -41,12 +41,17 @@ body {
 }
 
 /* Ocultar barra de scroll para un look más limpio */
-.chat-messages::-webkit-scrollbar { width: 6px; }
-.chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+.chat-messages::-webkit-scrollbar {
+    width: 6px;
+}
+.chat-messages::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
 
 .mensaje {
     max-width: 80%;
-    padding: 12px 16px;
+    padding: 1px 16px;
     border-radius: 18px;
     font-size: 0.95rem;
     line-height: 1.4;
@@ -55,8 +60,14 @@ body {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .mensaje-usuario {
@@ -68,9 +79,17 @@ body {
 
 .mensaje-bot {
     align-self: flex-start;
+    color: rgb(236, 234, 234);
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-bottom-left-radius: 4px;
+}
+.mensaje-hora {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    color: #d9dadc;
+    font-size: 0.8em;
 }
 
 .chat-input-area {
@@ -107,11 +126,48 @@ body {
     transition: background 0.3s ease;
 }
 
-.btn-enviar:hover { background: #2563eb; }
-.btn-enviar:disabled { background: #475569; cursor: not-allowed; }
+.btn-enviar:hover {
+    background: #2563eb;
+}
+.btn-enviar:disabled {
+    background: #475569;
+    cursor: not-allowed;
+}
 
 /* Agrega esto a tu CSS para estilizar el Markdown */
 .mensaje-bot strong {
     font-weight: bold;
-    color: #7e7777; /* O el color de tu marca */
+    color: #f1f0f0; /* O el color de tu marca */
+}
+.typing {
+    display: flex;
+    gap: 5px;
+    padding: 10px 0;
+}
+
+.typing span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.typing span:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.typing span:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes bounce {
+    0%,
+    80%,
+    100% {
+        transform: scale(0);
+    }
+
+    40% {
+        transform: scale(1);
+    }
 }
